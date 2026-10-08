@@ -1,4 +1,4 @@
-import { login, getInfo } from '@/api/login'
+import { login, getInfo, logout } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
@@ -55,15 +55,14 @@ const user = {
       })
     },
     // 登出
-    LogOut({ commit, dispatch }) {
-      return new Promise(resolve => {
-        logOut(commit)
-        commit('SET_USER', {})
-        commit('SET_LOAD_MENUS', false)
-        dispatch('tagsView/delAllViews', null, { root: true }).then(() => {
+    LogOut({ commit }) {
+      return new Promise((resolve, reject) => {
+        logout().then(res => {
+          logOut(commit)
           resolve()
-        }).catch(() => {
-          resolve()
+        }).catch(error => {
+          logOut(commit)
+          reject(error)
         })
       })
     },
