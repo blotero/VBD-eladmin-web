@@ -1,5 +1,5 @@
 import { login, getInfo, logout } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, clearAuth } from '@/utils/auth'
 
 const user = {
   state: {
@@ -77,8 +77,7 @@ const user = {
 
 export const logOut = (commit) => {
   commit('SET_TOKEN', '')
-  commit('SET_ROLES', [])
-  removeToken()
+  clearAuth(commit)
 }
 
 export const setUserInfo = (res, commit) => {
